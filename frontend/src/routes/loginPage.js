@@ -17,6 +17,8 @@ class LoginPage extends React.Component {
   
   onLoginAttempt() {
     console.log("Attempting to log in...")
+    console.log("Username", this.state.username);
+    console.log("Password", this.state.password);
   }
 
   onChange(event) {
