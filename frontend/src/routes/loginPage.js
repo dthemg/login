@@ -48,6 +48,7 @@ class LoginPage extends React.Component {
           <Button
             onClick={ this.onLoginAttempt }
             variant="contained"
+            color="primary"
           >
             Login
           </Button>

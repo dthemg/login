@@ -2,11 +2,12 @@ import React from 'react';
 import './App.css';
 import UserProfile from './routes/userProfile';
 import AboutPage from './routes/aboutPage';
+import CreateAccountPage from './routes/createAccountPage';
 import {
   BrowserRouter,
   Route ,
   Link,
-  Switch
+  Switch,
 } from 'react-router-dom';
 import LoginPage from './routes/loginPage';
 
@@ -15,6 +16,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       "isLoggedIn": false,
+      "userId": "",
     }
   }
 
@@ -31,6 +33,11 @@ class App extends React.Component {
                 </Link>
               </li>
               <li>
+                <Link to="/createAccount">
+                  Create account
+                </Link>
+              </li>
+              <li>
                 <Link to="/profile">
                   Profile
                 </Link>
@@ -44,8 +51,14 @@ class App extends React.Component {
           </nav>
           
           <Switch>
-            <Route path="/profile">
+            <Route path={"/profile/:userId"}>
               <UserProfile />
+            </Route>
+            <Route path={"/profile"}>
+              <UserProfile />
+            </Route>
+            <Route path={"/createAccount"}>
+              <CreateAccountPage />
             </Route>
             <Route path="/login">
               <LoginPage />
@@ -59,7 +72,6 @@ class App extends React.Component {
       </div>
     )
   }
-
 }
 
 
