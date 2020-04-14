@@ -7,7 +7,7 @@ const User = function(user) {
 
 User.addNew = (newUser, result) => {
   console.log("Attempting to add new User: ", newUser);
-  connection.query("INSERT INTO loginUsers SET ?", newUser, (err, res) => {
+  connection.query("INSERT INTO users SET ?", newUser, (err, res) => {
     if (err) {
       console.log("Error: ", err);
       result(err, null); // How does this actually work?
@@ -19,7 +19,7 @@ User.addNew = (newUser, result) => {
 };
 
 User.getAll = (result) => { // How do arrow functions actually work?
-  connection.query("SELECT * FROM loginUsers", (err, res) => {
+  connection.query("SELECT * FROM users", (err, res) => {
     if (err) {
       console.log("Error: ", err);
       result(err, null);
@@ -29,5 +29,14 @@ User.getAll = (result) => { // How do arrow functions actually work?
     result(null, res);
   });
 };
+
+// TODO: Keep working here: how to we check username and password simultaneously here?
+User.authenticate = (loginAttemptUser, result) => {
+  console.log("Attempting to login user with username", loginAttemptUser.username);
+  var sqlQuery = "SELECT * FROM users WHERE username = ? AND password = ?";
+  connection.query(sqlQuery, 
+    [loginAttemptUser.username, loginAttemptUser.password],
+    )
+}
 
 module.exports = User;

@@ -39,3 +39,30 @@ exports.addNew = (req, res) => {
     }
   });
 };
+
+// Authetication function
+exports.authenticate = (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "authenticate POST message is empty"
+    });
+  } else {
+    console.log("Received login attempt for user", req.body.username);
+  }
+
+  const loginAttemptUser = new User({
+    username: req.body.username,
+    password: req.body.password,
+  })
+
+  if (username && password) {
+    User.authenticate(loginAttemptUser, (err, data) => {
+      if (err) {
+        res.status(500).send({
+          message: err.message || "login attempt error"
+        });
+        res.send(data);
+      }
+    });
+  }
+}
