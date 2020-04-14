@@ -33,9 +33,17 @@ User.getAll = (result) => { // How do arrow functions actually work?
 // TODO: Keep working here: how to we check username and password simultaneously here?
 User.authenticate = (loginAttemptUser, result) => {
   console.log("Attempting to login user with username", loginAttemptUser.username);
-  var sqlQuery = "SELECT * FROM users WHERE username = ? AND password = ?";
-  connection.query(sqlQuery, 
-    [loginAttemptUser.username, loginAttemptUser.password],
+  var sqlQuery = "SELECT * FROM users WHERE ?";
+  connection.query(sqlQuery, loginAttemptUser, (err, res) => {
+    if (err) {
+      console.log("Error: ", err);
+      result(err, null); // What is going on here?
+      return;
+    }
+    if (res.length > 0) {
+      // UUUUUUUUhh what do I do here...
+    }
+  }
     )
 }
 
