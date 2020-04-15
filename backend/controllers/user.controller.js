@@ -55,7 +55,7 @@ exports.authenticate = (req, res) => {
     password: req.body.password,
   })
 
-  if (username && password) {
+  if (loginAttemptUser.username && loginAttemptUser.password) {
     User.authenticate(loginAttemptUser, (err, data) => {
       if (err) {
         res.status(500).send({

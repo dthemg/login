@@ -7,6 +7,9 @@ var session = require('express-session');
 var userRouter = require('./routes/users.routes');
 var app = express();
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
 // How do sessions work?
 app.use(session({
   secret: 'secret',
@@ -19,6 +22,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 app.use("/", userRouter);
 
