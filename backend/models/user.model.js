@@ -44,7 +44,11 @@ User.authenticate = (loginAttemptUser, result) => {
       return;
     }
     if (res.length > 0) {
-      console.log("LOGIN ATTEMPT SUCCESSFUL!");
+      console.log("Login attempt successful");
+      result(null, res);
+    } else {
+      console.log("Login attempt unsuccessful");
+      return;
     }
   });
 }

@@ -61,6 +61,7 @@ exports.authenticate = (req, res) => {
         res.status(500).send({
           message: err.message || "login attempt error"
         });
+      } else {
         res.send(data);
       }
     });
