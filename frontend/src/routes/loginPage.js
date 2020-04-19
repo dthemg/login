@@ -19,8 +19,24 @@ class LoginPage extends React.Component {
     console.log("Attempting to log in...")
     console.log("Username", this.state.username);
     console.log("Password", this.state.password);
-  }
 
+    fetch("http://localhost:9000/authenticate", 
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: this.state.username,
+          password: this.state.password,
+        })
+      }
+    )
+    .then(res => res.text())
+    .then(res => console.log(res));
+  }
+  
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }

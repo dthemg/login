@@ -12,6 +12,7 @@ class CreateAccountPage extends React.Component {
       newConfirmPassword: "",
     }
     this.onChange = this.onChange.bind(this);
+    this.submitNewAccount = this.submitNewAccount.bind(this);
   }
 
   onChange(event) {
@@ -19,8 +20,22 @@ class CreateAccountPage extends React.Component {
   }
 
   submitNewAccount(event) {
+    event.preventDefault();
     console.log("Creating account for: ");
     console.log(this.state);
+    fetch("http://localhost:9000/addNew", 
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: this.state.newUsername,
+          password: this.state.newPassword
+        })
+      }
+    )
   }
 
   render() {

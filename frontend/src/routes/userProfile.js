@@ -3,6 +3,27 @@ import { withRouter } from 'react-router-dom';
 
 
 class UserProfile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { username: "", userId: "" };
+    this.getProfileInfo();
+  }
+
+  getProfileInfo() {
+    console.log("GETTING SESSION PROFILE");
+    fetch("http://localhost:9000/profile",
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+    .then(res => res.text())
+    .then(res => console.log(res));
+  }
+
   renderNoProfile() {
     return (
       <div>
@@ -20,12 +41,7 @@ class UserProfile extends React.Component {
   }
 
   render() {
-    let params = this.props.match.params;
-    if (Object.keys(params).length === 0 && params.constructor === Object) {
-      return this.renderNoProfile()
-    } else {
-      return this.renderProfile(params.userId);
-    }
+    return this.renderNoProfile();
   }
 }
 
