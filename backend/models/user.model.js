@@ -30,20 +30,19 @@ User.getAll = (result) => { // How do arrow functions actually work?
   });
 };
 
-// TODO: Keep working here: how to we check username and password simultaneously here?
 User.authenticate = (loginAttemptUser, result) => {
   var username = loginAttemptUser.username;
   var password = loginAttemptUser.password;
   console.log("Attempting to login user with username", username);
-  var sqlQuery = "SELECT * FROM users WHERE username = ? AND password = ?";
 
+  var sqlQuery = "SELECT * FROM users WHERE username = ? AND password = ?";
   connection.query(sqlQuery, [username, password], (err, res) => {
     if (err) {
       console.log("Error: ", err);
       result(err, null); // What is going on here?
       return;
     }
-    if (res.length > 0) {
+    if (res.length > 1) {
       console.log("Login attempt successful");
       result(null, res);
     } else {
@@ -51,6 +50,19 @@ User.authenticate = (loginAttemptUser, result) => {
       return;
     }
   });
+}
+
+User.getProfile = (userId, result) => {
+  var sqlQuery = "SELECT * FROM users WHERE user_id = ?";
+  connection.query(sqlQuery, [userId], (err, res) => {
+    if (err) {
+      console.log("Error: ", err);
+      result(err, null);
+      return;
+    }
+    console.log("Found user profile for " + userId);
+    result(null, res);
+  })
 }
 
 module.exports = User;

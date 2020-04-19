@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var connection = require('../models/connection');
 const user = require('../controllers/user.controller');
+
 
 router.get("/getAll", user.getAll);
 router.post("/addNew", user.addNew);
 router.post("/authenticate", user.authenticate);
 
-module.exports = router
+// TODO: Implement below, should only be visible if logged in
+router.get("/profile", user.profile);
 
-// Add connection 
-// Add controller
+module.exports = router

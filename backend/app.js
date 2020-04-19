@@ -5,7 +5,16 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var userRouter = require('./routes/users.routes');
+var mysql = require('mysql');
+var mysqlConfig = require('../config/config');
+
 var app = express();
+
+var connection = mysql.createConnection(mysqlConfig);
+connection.connect(function(err) {
+  if (err) throw err;
+  console.log("DB connection establishd")
+});
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -14,7 +23,7 @@ app.set('view engine', 'jade');
 app.use(session({
   secret: 'secret',
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -22,8 +31,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-
-
 
 app.use("/", userRouter);
 
@@ -44,3 +51,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+module.exports = connection;
